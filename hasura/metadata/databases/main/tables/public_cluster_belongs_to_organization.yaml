@@ -1,0 +1,10 @@
+table:
+  schema: public
+  name: cluster_belongs_to_organization
+object_relationships:
+  - name: cluster
+    using:
+      foreign_key_constraint_on: cluster_id
+  - name: organization
+    using:
+      foreign_key_constraint_on: organization_id

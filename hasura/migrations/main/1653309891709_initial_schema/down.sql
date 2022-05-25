@@ -1,0 +1,9 @@
+DROP FUNCTION IF EXISTS "register";
+DROP FUNCTION IF EXISTS "generate_token_value";
+DROP TABLE IF EXISTS "cluster_belongs_to_organization";
+DROP TABLE IF EXISTS "cluster_registered_with_token";
+DROP TABLE IF EXISTS "cluster";
+DROP TABLE IF EXISTS "organization_registration_token";
+DROP TABLE IF EXISTS "user_belongs_to_organization";
+DROP TABLE IF EXISTS "organization";
+DROP TABLE IF EXISTS "user";

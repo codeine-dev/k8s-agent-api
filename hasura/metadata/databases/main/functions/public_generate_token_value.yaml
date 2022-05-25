@@ -1,0 +1,6 @@
+function:
+  schema: public
+  name: generate_token_value
+configuration:
+  custom_root_fields: {}
+  session_argument: hasura_session

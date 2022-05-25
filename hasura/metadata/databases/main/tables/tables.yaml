@@ -1,0 +1,7 @@
+- "!include public_cluster.yaml"
+- "!include public_cluster_belongs_to_organization.yaml"
+- "!include public_cluster_registered_with_token.yaml"
+- "!include public_organization.yaml"
+- "!include public_organization_registration_token.yaml"
+- "!include public_user.yaml"
+- "!include public_user_belongs_to_organization.yaml"

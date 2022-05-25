@@ -1,0 +1,19 @@
+table:
+  schema: public
+  name: cluster
+object_relationships:
+  - name: cluster_registered_with_token
+    using:
+      foreign_key_constraint_on:
+        column: cluster_id
+        table:
+          schema: public
+          name: cluster_registered_with_token
+array_relationships:
+  - name: cluster_belongs_to_organizations
+    using:
+      foreign_key_constraint_on:
+        column: cluster_id
+        table:
+          schema: public
+          name: cluster_belongs_to_organization

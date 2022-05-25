@@ -1,0 +1,6 @@
+function:
+  schema: public
+  name: register
+configuration:
+  custom_root_fields: {}
+  exposed_as: mutation

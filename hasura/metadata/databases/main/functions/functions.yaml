@@ -1,0 +1,2 @@
+- "!include public_generate_token_value.yaml"
+- "!include public_register.yaml"

@@ -1,0 +1,10 @@
+table:
+  schema: public
+  name: cluster_registered_with_token
+object_relationships:
+  - name: cluster
+    using:
+      foreign_key_constraint_on: cluster_id
+  - name: organization_registration_token
+    using:
+      foreign_key_constraint_on: token_id
