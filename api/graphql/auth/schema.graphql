@@ -1,0 +1,1885 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """measured in seconds"""
+  ttl: Int! = 60
+
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+) on QUERY
+
+input Boolean_cast_exp {
+  String: String_comparison_exp
+}
+
+"""
+Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
+"""
+input Boolean_comparison_exp {
+  _cast: Boolean_cast_exp
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+"""
+columns and relationships of "auth.access_token"
+"""
+type auth_access_token {
+  """An array relationship"""
+  access_token_has_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_access_token_has_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_access_token_has_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_access_token_has_roles_bool_exp
+  ): [auth_access_token_has_roles!]!
+
+  """An object relationship"""
+  account: auth_account!
+  account_id: uuid!
+
+  """An object relationship"""
+  actor: auth_actor
+  created_at: timestamptz!
+  has_own_roles: Boolean!
+  id: uuid!
+  overwrite_actor_id: uuid
+  token: String!
+}
+
+"""
+order by aggregate values of table "auth.access_token"
+"""
+input auth_access_token_aggregate_order_by {
+  count: order_by
+  max: auth_access_token_max_order_by
+  min: auth_access_token_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "auth.access_token"
+"""
+input auth_access_token_arr_rel_insert_input {
+  data: [auth_access_token_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: auth_access_token_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "auth.access_token". All fields are combined with a logical 'AND'.
+"""
+input auth_access_token_bool_exp {
+  _and: [auth_access_token_bool_exp!]
+  _not: auth_access_token_bool_exp
+  _or: [auth_access_token_bool_exp!]
+  access_token_has_roles: auth_access_token_has_roles_bool_exp
+  account: auth_account_bool_exp
+  account_id: uuid_comparison_exp
+  actor: auth_actor_bool_exp
+  created_at: timestamptz_comparison_exp
+  has_own_roles: Boolean_comparison_exp
+  id: uuid_comparison_exp
+  overwrite_actor_id: uuid_comparison_exp
+  token: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.access_token"
+"""
+enum auth_access_token_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  access_token_pkey
+}
+
+"""
+columns and relationships of "auth.access_token_has_roles"
+"""
+type auth_access_token_has_roles {
+  """An object relationship"""
+  access_token: auth_access_token!
+  access_token_id: uuid!
+
+  """An object relationship"""
+  role: auth_role!
+  role_value: String!
+}
+
+"""
+order by aggregate values of table "auth.access_token_has_roles"
+"""
+input auth_access_token_has_roles_aggregate_order_by {
+  count: order_by
+  max: auth_access_token_has_roles_max_order_by
+  min: auth_access_token_has_roles_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "auth.access_token_has_roles"
+"""
+input auth_access_token_has_roles_arr_rel_insert_input {
+  data: [auth_access_token_has_roles_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: auth_access_token_has_roles_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "auth.access_token_has_roles". All fields are combined with a logical 'AND'.
+"""
+input auth_access_token_has_roles_bool_exp {
+  _and: [auth_access_token_has_roles_bool_exp!]
+  _not: auth_access_token_has_roles_bool_exp
+  _or: [auth_access_token_has_roles_bool_exp!]
+  access_token: auth_access_token_bool_exp
+  access_token_id: uuid_comparison_exp
+  role: auth_role_bool_exp
+  role_value: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.access_token_has_roles"
+"""
+enum auth_access_token_has_roles_constraint {
+  """
+  unique or primary key constraint on columns "access_token_id", "role_value"
+  """
+  pk_access_token_has_roles
+}
+
+"""
+input type for inserting data into table "auth.access_token_has_roles"
+"""
+input auth_access_token_has_roles_insert_input {
+  access_token: auth_access_token_obj_rel_insert_input
+  access_token_id: uuid
+  role: auth_role_obj_rel_insert_input
+  role_value: String
+}
+
+"""
+order by max() on columns of table "auth.access_token_has_roles"
+"""
+input auth_access_token_has_roles_max_order_by {
+  access_token_id: order_by
+  role_value: order_by
+}
+
+"""
+order by min() on columns of table "auth.access_token_has_roles"
+"""
+input auth_access_token_has_roles_min_order_by {
+  access_token_id: order_by
+  role_value: order_by
+}
+
+"""
+response of any mutation on the table "auth.access_token_has_roles"
+"""
+type auth_access_token_has_roles_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [auth_access_token_has_roles!]!
+}
+
+"""
+on_conflict condition type for table "auth.access_token_has_roles"
+"""
+input auth_access_token_has_roles_on_conflict {
+  constraint: auth_access_token_has_roles_constraint!
+  update_columns: [auth_access_token_has_roles_update_column!]! = []
+  where: auth_access_token_has_roles_bool_exp
+}
+
+"""
+Ordering options when selecting data from "auth.access_token_has_roles".
+"""
+input auth_access_token_has_roles_order_by {
+  access_token: auth_access_token_order_by
+  access_token_id: order_by
+  role: auth_role_order_by
+  role_value: order_by
+}
+
+"""primary key columns input for table: auth_access_token_has_roles"""
+input auth_access_token_has_roles_pk_columns_input {
+  access_token_id: uuid!
+  role_value: String!
+}
+
+"""
+select columns of table "auth.access_token_has_roles"
+"""
+enum auth_access_token_has_roles_select_column {
+  """column name"""
+  access_token_id
+
+  """column name"""
+  role_value
+}
+
+"""
+input type for updating data in table "auth.access_token_has_roles"
+"""
+input auth_access_token_has_roles_set_input {
+  access_token_id: uuid
+  role_value: String
+}
+
+"""
+update columns of table "auth.access_token_has_roles"
+"""
+enum auth_access_token_has_roles_update_column {
+  """column name"""
+  access_token_id
+
+  """column name"""
+  role_value
+}
+
+"""
+input type for inserting data into table "auth.access_token"
+"""
+input auth_access_token_insert_input {
+  access_token_has_roles: auth_access_token_has_roles_arr_rel_insert_input
+  account: auth_account_obj_rel_insert_input
+  account_id: uuid
+  actor: auth_actor_obj_rel_insert_input
+  created_at: timestamptz
+  has_own_roles: Boolean
+  id: uuid
+  overwrite_actor_id: uuid
+  token: String
+}
+
+"""
+order by max() on columns of table "auth.access_token"
+"""
+input auth_access_token_max_order_by {
+  account_id: order_by
+  created_at: order_by
+  id: order_by
+  overwrite_actor_id: order_by
+  token: order_by
+}
+
+"""
+order by min() on columns of table "auth.access_token"
+"""
+input auth_access_token_min_order_by {
+  account_id: order_by
+  created_at: order_by
+  id: order_by
+  overwrite_actor_id: order_by
+  token: order_by
+}
+
+"""
+response of any mutation on the table "auth.access_token"
+"""
+type auth_access_token_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [auth_access_token!]!
+}
+
+"""
+input type for inserting object relation for remote table "auth.access_token"
+"""
+input auth_access_token_obj_rel_insert_input {
+  data: auth_access_token_insert_input!
+
+  """upsert condition"""
+  on_conflict: auth_access_token_on_conflict
+}
+
+"""
+on_conflict condition type for table "auth.access_token"
+"""
+input auth_access_token_on_conflict {
+  constraint: auth_access_token_constraint!
+  update_columns: [auth_access_token_update_column!]! = []
+  where: auth_access_token_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.access_token"."""
+input auth_access_token_order_by {
+  access_token_has_roles_aggregate: auth_access_token_has_roles_aggregate_order_by
+  account: auth_account_order_by
+  account_id: order_by
+  actor: auth_actor_order_by
+  created_at: order_by
+  has_own_roles: order_by
+  id: order_by
+  overwrite_actor_id: order_by
+  token: order_by
+}
+
+"""primary key columns input for table: auth_access_token"""
+input auth_access_token_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "auth.access_token"
+"""
+enum auth_access_token_select_column {
+  """column name"""
+  account_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  has_own_roles
+
+  """column name"""
+  id
+
+  """column name"""
+  overwrite_actor_id
+
+  """column name"""
+  token
+}
+
+"""
+input type for updating data in table "auth.access_token"
+"""
+input auth_access_token_set_input {
+  account_id: uuid
+  created_at: timestamptz
+  has_own_roles: Boolean
+  id: uuid
+  overwrite_actor_id: uuid
+  token: String
+}
+
+"""
+update columns of table "auth.access_token"
+"""
+enum auth_access_token_update_column {
+  """column name"""
+  account_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  has_own_roles
+
+  """column name"""
+  id
+
+  """column name"""
+  overwrite_actor_id
+
+  """column name"""
+  token
+}
+
+"""
+columns and relationships of "auth.account"
+"""
+type auth_account {
+  """An array relationship"""
+  access_tokens(
+    """distinct select on columns"""
+    distinct_on: [auth_access_token_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_access_token_order_by!]
+
+    """filter the rows returned"""
+    where: auth_access_token_bool_exp
+  ): [auth_access_token!]!
+
+  """An array relationship"""
+  account_has_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_account_has_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_has_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_has_roles_bool_exp
+  ): [auth_account_has_roles!]!
+
+  """An object relationship"""
+  actor: auth_actor!
+  actor_id: uuid!
+  created_at: timestamptz!
+  email: String!
+  id: uuid!
+  password: String!
+}
+
+"""
+order by aggregate values of table "auth.account"
+"""
+input auth_account_aggregate_order_by {
+  count: order_by
+  max: auth_account_max_order_by
+  min: auth_account_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "auth.account"
+"""
+input auth_account_arr_rel_insert_input {
+  data: [auth_account_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: auth_account_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "auth.account". All fields are combined with a logical 'AND'.
+"""
+input auth_account_bool_exp {
+  _and: [auth_account_bool_exp!]
+  _not: auth_account_bool_exp
+  _or: [auth_account_bool_exp!]
+  access_tokens: auth_access_token_bool_exp
+  account_has_roles: auth_account_has_roles_bool_exp
+  actor: auth_actor_bool_exp
+  actor_id: uuid_comparison_exp
+  created_at: timestamptz_comparison_exp
+  email: String_comparison_exp
+  id: uuid_comparison_exp
+  password: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.account"
+"""
+enum auth_account_constraint {
+  """
+  unique or primary key constraint on columns "email"
+  """
+  account_email_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  account_pkey
+}
+
+"""
+columns and relationships of "auth.account_has_roles"
+"""
+type auth_account_has_roles {
+  """An object relationship"""
+  account: auth_account!
+  account_id: uuid!
+
+  """An object relationship"""
+  role: auth_role!
+  role_value: String!
+}
+
+"""
+order by aggregate values of table "auth.account_has_roles"
+"""
+input auth_account_has_roles_aggregate_order_by {
+  count: order_by
+  max: auth_account_has_roles_max_order_by
+  min: auth_account_has_roles_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "auth.account_has_roles"
+"""
+input auth_account_has_roles_arr_rel_insert_input {
+  data: [auth_account_has_roles_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: auth_account_has_roles_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "auth.account_has_roles". All fields are combined with a logical 'AND'.
+"""
+input auth_account_has_roles_bool_exp {
+  _and: [auth_account_has_roles_bool_exp!]
+  _not: auth_account_has_roles_bool_exp
+  _or: [auth_account_has_roles_bool_exp!]
+  account: auth_account_bool_exp
+  account_id: uuid_comparison_exp
+  role: auth_role_bool_exp
+  role_value: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.account_has_roles"
+"""
+enum auth_account_has_roles_constraint {
+  """
+  unique or primary key constraint on columns "role_value", "account_id"
+  """
+  pk_account_has_roles
+}
+
+"""
+input type for inserting data into table "auth.account_has_roles"
+"""
+input auth_account_has_roles_insert_input {
+  account: auth_account_obj_rel_insert_input
+  account_id: uuid
+  role: auth_role_obj_rel_insert_input
+  role_value: String
+}
+
+"""
+order by max() on columns of table "auth.account_has_roles"
+"""
+input auth_account_has_roles_max_order_by {
+  account_id: order_by
+  role_value: order_by
+}
+
+"""
+order by min() on columns of table "auth.account_has_roles"
+"""
+input auth_account_has_roles_min_order_by {
+  account_id: order_by
+  role_value: order_by
+}
+
+"""
+response of any mutation on the table "auth.account_has_roles"
+"""
+type auth_account_has_roles_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [auth_account_has_roles!]!
+}
+
+"""
+on_conflict condition type for table "auth.account_has_roles"
+"""
+input auth_account_has_roles_on_conflict {
+  constraint: auth_account_has_roles_constraint!
+  update_columns: [auth_account_has_roles_update_column!]! = []
+  where: auth_account_has_roles_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.account_has_roles"."""
+input auth_account_has_roles_order_by {
+  account: auth_account_order_by
+  account_id: order_by
+  role: auth_role_order_by
+  role_value: order_by
+}
+
+"""primary key columns input for table: auth_account_has_roles"""
+input auth_account_has_roles_pk_columns_input {
+  account_id: uuid!
+  role_value: String!
+}
+
+"""
+select columns of table "auth.account_has_roles"
+"""
+enum auth_account_has_roles_select_column {
+  """column name"""
+  account_id
+
+  """column name"""
+  role_value
+}
+
+"""
+input type for updating data in table "auth.account_has_roles"
+"""
+input auth_account_has_roles_set_input {
+  account_id: uuid
+  role_value: String
+}
+
+"""
+update columns of table "auth.account_has_roles"
+"""
+enum auth_account_has_roles_update_column {
+  """column name"""
+  account_id
+
+  """column name"""
+  role_value
+}
+
+"""
+input type for inserting data into table "auth.account"
+"""
+input auth_account_insert_input {
+  access_tokens: auth_access_token_arr_rel_insert_input
+  account_has_roles: auth_account_has_roles_arr_rel_insert_input
+  actor: auth_actor_obj_rel_insert_input
+  actor_id: uuid
+  created_at: timestamptz
+  email: String
+  id: uuid
+  password: String
+}
+
+"""
+order by max() on columns of table "auth.account"
+"""
+input auth_account_max_order_by {
+  actor_id: order_by
+  created_at: order_by
+  email: order_by
+  id: order_by
+  password: order_by
+}
+
+"""
+order by min() on columns of table "auth.account"
+"""
+input auth_account_min_order_by {
+  actor_id: order_by
+  created_at: order_by
+  email: order_by
+  id: order_by
+  password: order_by
+}
+
+"""
+response of any mutation on the table "auth.account"
+"""
+type auth_account_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [auth_account!]!
+}
+
+"""
+input type for inserting object relation for remote table "auth.account"
+"""
+input auth_account_obj_rel_insert_input {
+  data: auth_account_insert_input!
+
+  """upsert condition"""
+  on_conflict: auth_account_on_conflict
+}
+
+"""
+on_conflict condition type for table "auth.account"
+"""
+input auth_account_on_conflict {
+  constraint: auth_account_constraint!
+  update_columns: [auth_account_update_column!]! = []
+  where: auth_account_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.account"."""
+input auth_account_order_by {
+  access_tokens_aggregate: auth_access_token_aggregate_order_by
+  account_has_roles_aggregate: auth_account_has_roles_aggregate_order_by
+  actor: auth_actor_order_by
+  actor_id: order_by
+  created_at: order_by
+  email: order_by
+  id: order_by
+  password: order_by
+}
+
+"""primary key columns input for table: auth_account"""
+input auth_account_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "auth.account"
+"""
+enum auth_account_select_column {
+  """column name"""
+  actor_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  password
+}
+
+"""
+input type for updating data in table "auth.account"
+"""
+input auth_account_set_input {
+  actor_id: uuid
+  created_at: timestamptz
+  email: String
+  id: uuid
+  password: String
+}
+
+"""
+update columns of table "auth.account"
+"""
+enum auth_account_update_column {
+  """column name"""
+  actor_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  password
+}
+
+"""
+columns and relationships of "auth.actor"
+"""
+type auth_actor {
+  """An array relationship"""
+  access_tokens(
+    """distinct select on columns"""
+    distinct_on: [auth_access_token_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_access_token_order_by!]
+
+    """filter the rows returned"""
+    where: auth_access_token_bool_exp
+  ): [auth_access_token!]!
+
+  """An array relationship"""
+  accounts(
+    """distinct select on columns"""
+    distinct_on: [auth_account_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_bool_exp
+  ): [auth_account!]!
+  created_at: timestamptz!
+  id: uuid!
+}
+
+"""
+aggregated selection of "auth.actor"
+"""
+type auth_actor_aggregate {
+  aggregate: auth_actor_aggregate_fields
+  nodes: [auth_actor!]!
+}
+
+"""
+aggregate fields of "auth.actor"
+"""
+type auth_actor_aggregate_fields {
+  count(columns: [auth_actor_select_column!], distinct: Boolean): Int!
+  max: auth_actor_max_fields
+  min: auth_actor_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "auth.actor". All fields are combined with a logical 'AND'.
+"""
+input auth_actor_bool_exp {
+  _and: [auth_actor_bool_exp!]
+  _not: auth_actor_bool_exp
+  _or: [auth_actor_bool_exp!]
+  access_tokens: auth_access_token_bool_exp
+  accounts: auth_account_bool_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.actor"
+"""
+enum auth_actor_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  actor_pkey
+}
+
+"""
+input type for inserting data into table "auth.actor"
+"""
+input auth_actor_insert_input {
+  access_tokens: auth_access_token_arr_rel_insert_input
+  accounts: auth_account_arr_rel_insert_input
+  created_at: timestamptz
+  id: uuid
+}
+
+"""aggregate max on columns"""
+type auth_actor_max_fields {
+  created_at: timestamptz
+  id: uuid
+}
+
+"""aggregate min on columns"""
+type auth_actor_min_fields {
+  created_at: timestamptz
+  id: uuid
+}
+
+"""
+response of any mutation on the table "auth.actor"
+"""
+type auth_actor_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [auth_actor!]!
+}
+
+"""
+input type for inserting object relation for remote table "auth.actor"
+"""
+input auth_actor_obj_rel_insert_input {
+  data: auth_actor_insert_input!
+
+  """upsert condition"""
+  on_conflict: auth_actor_on_conflict
+}
+
+"""
+on_conflict condition type for table "auth.actor"
+"""
+input auth_actor_on_conflict {
+  constraint: auth_actor_constraint!
+  update_columns: [auth_actor_update_column!]! = []
+  where: auth_actor_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.actor"."""
+input auth_actor_order_by {
+  access_tokens_aggregate: auth_access_token_aggregate_order_by
+  accounts_aggregate: auth_account_aggregate_order_by
+  created_at: order_by
+  id: order_by
+}
+
+"""primary key columns input for table: auth_actor"""
+input auth_actor_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "auth.actor"
+"""
+enum auth_actor_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+}
+
+"""
+input type for updating data in table "auth.actor"
+"""
+input auth_actor_set_input {
+  created_at: timestamptz
+  id: uuid
+}
+
+"""
+update columns of table "auth.actor"
+"""
+enum auth_actor_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+}
+
+"""
+columns and relationships of "auth.role"
+"""
+type auth_role {
+  """An array relationship"""
+  access_tokens(
+    """distinct select on columns"""
+    distinct_on: [auth_access_token_has_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_access_token_has_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_access_token_has_roles_bool_exp
+  ): [auth_access_token_has_roles!]!
+
+  """An array relationship"""
+  accounts(
+    """distinct select on columns"""
+    distinct_on: [auth_account_has_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_has_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_has_roles_bool_exp
+  ): [auth_account_has_roles!]!
+  value: String!
+}
+
+"""
+Boolean expression to filter rows from the table "auth.role". All fields are combined with a logical 'AND'.
+"""
+input auth_role_bool_exp {
+  _and: [auth_role_bool_exp!]
+  _not: auth_role_bool_exp
+  _or: [auth_role_bool_exp!]
+  access_tokens: auth_access_token_has_roles_bool_exp
+  accounts: auth_account_has_roles_bool_exp
+  value: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.role"
+"""
+enum auth_role_constraint {
+  """
+  unique or primary key constraint on columns "value"
+  """
+  role_pkey
+}
+
+"""
+input type for inserting data into table "auth.role"
+"""
+input auth_role_insert_input {
+  access_tokens: auth_access_token_has_roles_arr_rel_insert_input
+  accounts: auth_account_has_roles_arr_rel_insert_input
+  value: String
+}
+
+"""
+response of any mutation on the table "auth.role"
+"""
+type auth_role_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [auth_role!]!
+}
+
+"""
+input type for inserting object relation for remote table "auth.role"
+"""
+input auth_role_obj_rel_insert_input {
+  data: auth_role_insert_input!
+
+  """upsert condition"""
+  on_conflict: auth_role_on_conflict
+}
+
+"""
+on_conflict condition type for table "auth.role"
+"""
+input auth_role_on_conflict {
+  constraint: auth_role_constraint!
+  update_columns: [auth_role_update_column!]! = []
+  where: auth_role_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.role"."""
+input auth_role_order_by {
+  access_tokens_aggregate: auth_access_token_has_roles_aggregate_order_by
+  accounts_aggregate: auth_account_has_roles_aggregate_order_by
+  value: order_by
+}
+
+"""primary key columns input for table: auth_role"""
+input auth_role_pk_columns_input {
+  value: String!
+}
+
+"""
+select columns of table "auth.role"
+"""
+enum auth_role_select_column {
+  """column name"""
+  value
+}
+
+"""
+input type for updating data in table "auth.role"
+"""
+input auth_role_set_input {
+  value: String
+}
+
+"""
+update columns of table "auth.role"
+"""
+enum auth_role_update_column {
+  """column name"""
+  value
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "auth.access_token"
+  """
+  delete_auth_access_token(
+    """filter the rows which have to be deleted"""
+    where: auth_access_token_bool_exp!
+  ): auth_access_token_mutation_response
+
+  """
+  delete single row from the table: "auth.access_token"
+  """
+  delete_auth_access_token_by_pk(id: uuid!): auth_access_token
+
+  """
+  delete data from the table: "auth.access_token_has_roles"
+  """
+  delete_auth_access_token_has_roles(
+    """filter the rows which have to be deleted"""
+    where: auth_access_token_has_roles_bool_exp!
+  ): auth_access_token_has_roles_mutation_response
+
+  """
+  delete single row from the table: "auth.access_token_has_roles"
+  """
+  delete_auth_access_token_has_roles_by_pk(access_token_id: uuid!, role_value: String!): auth_access_token_has_roles
+
+  """
+  delete data from the table: "auth.account"
+  """
+  delete_auth_account(
+    """filter the rows which have to be deleted"""
+    where: auth_account_bool_exp!
+  ): auth_account_mutation_response
+
+  """
+  delete single row from the table: "auth.account"
+  """
+  delete_auth_account_by_pk(id: uuid!): auth_account
+
+  """
+  delete data from the table: "auth.account_has_roles"
+  """
+  delete_auth_account_has_roles(
+    """filter the rows which have to be deleted"""
+    where: auth_account_has_roles_bool_exp!
+  ): auth_account_has_roles_mutation_response
+
+  """
+  delete single row from the table: "auth.account_has_roles"
+  """
+  delete_auth_account_has_roles_by_pk(account_id: uuid!, role_value: String!): auth_account_has_roles
+
+  """
+  delete data from the table: "auth.actor"
+  """
+  delete_auth_actor(
+    """filter the rows which have to be deleted"""
+    where: auth_actor_bool_exp!
+  ): auth_actor_mutation_response
+
+  """
+  delete single row from the table: "auth.actor"
+  """
+  delete_auth_actor_by_pk(id: uuid!): auth_actor
+
+  """
+  delete data from the table: "auth.role"
+  """
+  delete_auth_role(
+    """filter the rows which have to be deleted"""
+    where: auth_role_bool_exp!
+  ): auth_role_mutation_response
+
+  """
+  delete single row from the table: "auth.role"
+  """
+  delete_auth_role_by_pk(value: String!): auth_role
+
+  """
+  insert data into the table: "auth.access_token"
+  """
+  insert_auth_access_token(
+    """the rows to be inserted"""
+    objects: [auth_access_token_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: auth_access_token_on_conflict
+  ): auth_access_token_mutation_response
+
+  """
+  insert data into the table: "auth.access_token_has_roles"
+  """
+  insert_auth_access_token_has_roles(
+    """the rows to be inserted"""
+    objects: [auth_access_token_has_roles_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: auth_access_token_has_roles_on_conflict
+  ): auth_access_token_has_roles_mutation_response
+
+  """
+  insert a single row into the table: "auth.access_token_has_roles"
+  """
+  insert_auth_access_token_has_roles_one(
+    """the row to be inserted"""
+    object: auth_access_token_has_roles_insert_input!
+
+    """upsert condition"""
+    on_conflict: auth_access_token_has_roles_on_conflict
+  ): auth_access_token_has_roles
+
+  """
+  insert a single row into the table: "auth.access_token"
+  """
+  insert_auth_access_token_one(
+    """the row to be inserted"""
+    object: auth_access_token_insert_input!
+
+    """upsert condition"""
+    on_conflict: auth_access_token_on_conflict
+  ): auth_access_token
+
+  """
+  insert data into the table: "auth.account"
+  """
+  insert_auth_account(
+    """the rows to be inserted"""
+    objects: [auth_account_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: auth_account_on_conflict
+  ): auth_account_mutation_response
+
+  """
+  insert data into the table: "auth.account_has_roles"
+  """
+  insert_auth_account_has_roles(
+    """the rows to be inserted"""
+    objects: [auth_account_has_roles_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: auth_account_has_roles_on_conflict
+  ): auth_account_has_roles_mutation_response
+
+  """
+  insert a single row into the table: "auth.account_has_roles"
+  """
+  insert_auth_account_has_roles_one(
+    """the row to be inserted"""
+    object: auth_account_has_roles_insert_input!
+
+    """upsert condition"""
+    on_conflict: auth_account_has_roles_on_conflict
+  ): auth_account_has_roles
+
+  """
+  insert a single row into the table: "auth.account"
+  """
+  insert_auth_account_one(
+    """the row to be inserted"""
+    object: auth_account_insert_input!
+
+    """upsert condition"""
+    on_conflict: auth_account_on_conflict
+  ): auth_account
+
+  """
+  insert data into the table: "auth.actor"
+  """
+  insert_auth_actor(
+    """the rows to be inserted"""
+    objects: [auth_actor_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: auth_actor_on_conflict
+  ): auth_actor_mutation_response
+
+  """
+  insert a single row into the table: "auth.actor"
+  """
+  insert_auth_actor_one(
+    """the row to be inserted"""
+    object: auth_actor_insert_input!
+
+    """upsert condition"""
+    on_conflict: auth_actor_on_conflict
+  ): auth_actor
+
+  """
+  insert data into the table: "auth.role"
+  """
+  insert_auth_role(
+    """the rows to be inserted"""
+    objects: [auth_role_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: auth_role_on_conflict
+  ): auth_role_mutation_response
+
+  """
+  insert a single row into the table: "auth.role"
+  """
+  insert_auth_role_one(
+    """the row to be inserted"""
+    object: auth_role_insert_input!
+
+    """upsert condition"""
+    on_conflict: auth_role_on_conflict
+  ): auth_role
+
+  """
+  update data of the table: "auth.access_token"
+  """
+  update_auth_access_token(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_access_token_set_input
+
+    """filter the rows which have to be updated"""
+    where: auth_access_token_bool_exp!
+  ): auth_access_token_mutation_response
+
+  """
+  update single row of the table: "auth.access_token"
+  """
+  update_auth_access_token_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_access_token_set_input
+    pk_columns: auth_access_token_pk_columns_input!
+  ): auth_access_token
+
+  """
+  update data of the table: "auth.access_token_has_roles"
+  """
+  update_auth_access_token_has_roles(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_access_token_has_roles_set_input
+
+    """filter the rows which have to be updated"""
+    where: auth_access_token_has_roles_bool_exp!
+  ): auth_access_token_has_roles_mutation_response
+
+  """
+  update single row of the table: "auth.access_token_has_roles"
+  """
+  update_auth_access_token_has_roles_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_access_token_has_roles_set_input
+    pk_columns: auth_access_token_has_roles_pk_columns_input!
+  ): auth_access_token_has_roles
+
+  """
+  update data of the table: "auth.account"
+  """
+  update_auth_account(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_account_set_input
+
+    """filter the rows which have to be updated"""
+    where: auth_account_bool_exp!
+  ): auth_account_mutation_response
+
+  """
+  update single row of the table: "auth.account"
+  """
+  update_auth_account_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_account_set_input
+    pk_columns: auth_account_pk_columns_input!
+  ): auth_account
+
+  """
+  update data of the table: "auth.account_has_roles"
+  """
+  update_auth_account_has_roles(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_account_has_roles_set_input
+
+    """filter the rows which have to be updated"""
+    where: auth_account_has_roles_bool_exp!
+  ): auth_account_has_roles_mutation_response
+
+  """
+  update single row of the table: "auth.account_has_roles"
+  """
+  update_auth_account_has_roles_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_account_has_roles_set_input
+    pk_columns: auth_account_has_roles_pk_columns_input!
+  ): auth_account_has_roles
+
+  """
+  update data of the table: "auth.actor"
+  """
+  update_auth_actor(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_actor_set_input
+
+    """filter the rows which have to be updated"""
+    where: auth_actor_bool_exp!
+  ): auth_actor_mutation_response
+
+  """
+  update single row of the table: "auth.actor"
+  """
+  update_auth_actor_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_actor_set_input
+    pk_columns: auth_actor_pk_columns_input!
+  ): auth_actor
+
+  """
+  update data of the table: "auth.role"
+  """
+  update_auth_role(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_role_set_input
+
+    """filter the rows which have to be updated"""
+    where: auth_role_bool_exp!
+  ): auth_role_mutation_response
+
+  """
+  update single row of the table: "auth.role"
+  """
+  update_auth_role_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: auth_role_set_input
+    pk_columns: auth_role_pk_columns_input!
+  ): auth_role
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+type query_root {
+  """
+  fetch data from the table: "auth.access_token"
+  """
+  auth_access_token(
+    """distinct select on columns"""
+    distinct_on: [auth_access_token_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_access_token_order_by!]
+
+    """filter the rows returned"""
+    where: auth_access_token_bool_exp
+  ): [auth_access_token!]!
+
+  """
+  fetch data from the table: "auth.access_token" using primary key columns
+  """
+  auth_access_token_by_pk(id: uuid!): auth_access_token
+
+  """
+  fetch data from the table: "auth.access_token_has_roles"
+  """
+  auth_access_token_has_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_access_token_has_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_access_token_has_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_access_token_has_roles_bool_exp
+  ): [auth_access_token_has_roles!]!
+
+  """
+  fetch data from the table: "auth.access_token_has_roles" using primary key columns
+  """
+  auth_access_token_has_roles_by_pk(access_token_id: uuid!, role_value: String!): auth_access_token_has_roles
+
+  """
+  fetch data from the table: "auth.account"
+  """
+  auth_account(
+    """distinct select on columns"""
+    distinct_on: [auth_account_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_bool_exp
+  ): [auth_account!]!
+
+  """fetch data from the table: "auth.account" using primary key columns"""
+  auth_account_by_pk(id: uuid!): auth_account
+
+  """
+  fetch data from the table: "auth.account_has_roles"
+  """
+  auth_account_has_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_account_has_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_has_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_has_roles_bool_exp
+  ): [auth_account_has_roles!]!
+
+  """
+  fetch data from the table: "auth.account_has_roles" using primary key columns
+  """
+  auth_account_has_roles_by_pk(account_id: uuid!, role_value: String!): auth_account_has_roles
+
+  """
+  fetch data from the table: "auth.actor"
+  """
+  auth_actor(
+    """distinct select on columns"""
+    distinct_on: [auth_actor_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_actor_order_by!]
+
+    """filter the rows returned"""
+    where: auth_actor_bool_exp
+  ): [auth_actor!]!
+
+  """
+  fetch aggregated fields from the table: "auth.actor"
+  """
+  auth_actor_aggregate(
+    """distinct select on columns"""
+    distinct_on: [auth_actor_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_actor_order_by!]
+
+    """filter the rows returned"""
+    where: auth_actor_bool_exp
+  ): auth_actor_aggregate!
+
+  """fetch data from the table: "auth.actor" using primary key columns"""
+  auth_actor_by_pk(id: uuid!): auth_actor
+
+  """
+  fetch data from the table: "auth.role"
+  """
+  auth_role(
+    """distinct select on columns"""
+    distinct_on: [auth_role_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_role_order_by!]
+
+    """filter the rows returned"""
+    where: auth_role_bool_exp
+  ): [auth_role!]!
+
+  """fetch data from the table: "auth.role" using primary key columns"""
+  auth_role_by_pk(value: String!): auth_role
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "auth.access_token"
+  """
+  auth_access_token(
+    """distinct select on columns"""
+    distinct_on: [auth_access_token_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_access_token_order_by!]
+
+    """filter the rows returned"""
+    where: auth_access_token_bool_exp
+  ): [auth_access_token!]!
+
+  """
+  fetch data from the table: "auth.access_token" using primary key columns
+  """
+  auth_access_token_by_pk(id: uuid!): auth_access_token
+
+  """
+  fetch data from the table: "auth.access_token_has_roles"
+  """
+  auth_access_token_has_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_access_token_has_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_access_token_has_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_access_token_has_roles_bool_exp
+  ): [auth_access_token_has_roles!]!
+
+  """
+  fetch data from the table: "auth.access_token_has_roles" using primary key columns
+  """
+  auth_access_token_has_roles_by_pk(access_token_id: uuid!, role_value: String!): auth_access_token_has_roles
+
+  """
+  fetch data from the table: "auth.account"
+  """
+  auth_account(
+    """distinct select on columns"""
+    distinct_on: [auth_account_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_bool_exp
+  ): [auth_account!]!
+
+  """fetch data from the table: "auth.account" using primary key columns"""
+  auth_account_by_pk(id: uuid!): auth_account
+
+  """
+  fetch data from the table: "auth.account_has_roles"
+  """
+  auth_account_has_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_account_has_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_has_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_has_roles_bool_exp
+  ): [auth_account_has_roles!]!
+
+  """
+  fetch data from the table: "auth.account_has_roles" using primary key columns
+  """
+  auth_account_has_roles_by_pk(account_id: uuid!, role_value: String!): auth_account_has_roles
+
+  """
+  fetch data from the table: "auth.actor"
+  """
+  auth_actor(
+    """distinct select on columns"""
+    distinct_on: [auth_actor_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_actor_order_by!]
+
+    """filter the rows returned"""
+    where: auth_actor_bool_exp
+  ): [auth_actor!]!
+
+  """
+  fetch aggregated fields from the table: "auth.actor"
+  """
+  auth_actor_aggregate(
+    """distinct select on columns"""
+    distinct_on: [auth_actor_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_actor_order_by!]
+
+    """filter the rows returned"""
+    where: auth_actor_bool_exp
+  ): auth_actor_aggregate!
+
+  """fetch data from the table: "auth.actor" using primary key columns"""
+  auth_actor_by_pk(id: uuid!): auth_actor
+
+  """
+  fetch data from the table: "auth.role"
+  """
+  auth_role(
+    """distinct select on columns"""
+    distinct_on: [auth_role_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_role_order_by!]
+
+    """filter the rows returned"""
+    where: auth_role_bool_exp
+  ): [auth_role!]!
+
+  """fetch data from the table: "auth.role" using primary key columns"""
+  auth_role_by_pk(value: String!): auth_role
+}
+
+scalar timestamptz
+
+input timestamptz_cast_exp {
+  String: String_comparison_exp
+}
+
+"""
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _cast: timestamptz_cast_exp
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+scalar uuid
+
+input uuid_cast_exp {
+  String: String_comparison_exp
+}
+
+"""
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _cast: uuid_cast_exp
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+

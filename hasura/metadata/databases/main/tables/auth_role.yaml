@@ -1,0 +1,42 @@
+table:
+  schema: auth
+  name: role
+array_relationships:
+  - name: access_tokens
+    using:
+      foreign_key_constraint_on:
+        column: role_value
+        table:
+          schema: auth
+          name: access_token_has_roles
+  - name: accounts
+    using:
+      foreign_key_constraint_on:
+        column: role_value
+        table:
+          schema: auth
+          name: account_has_roles
+insert_permissions:
+  - role: auth-server
+    permission:
+      check: {}
+      columns:
+        - value
+select_permissions:
+  - role: auth-server
+    permission:
+      columns:
+        - value
+      filter: {}
+update_permissions:
+  - role: auth-server
+    permission:
+      columns:
+        - value
+      filter: {}
+      check: {}
+delete_permissions:
+  - role: auth-server
+    permission:
+      backend_only: false
+      filter: {}

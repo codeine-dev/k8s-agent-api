@@ -1,0 +1,46 @@
+table:
+  schema: auth
+  name: actor
+array_relationships:
+  - name: access_tokens
+    using:
+      foreign_key_constraint_on:
+        column: overwrite_actor_id
+        table:
+          schema: auth
+          name: access_token
+  - name: accounts
+    using:
+      foreign_key_constraint_on:
+        column: actor_id
+        table:
+          schema: auth
+          name: account
+insert_permissions:
+  - role: auth-server
+    permission:
+      check: {}
+      columns:
+        - created_at
+        - id
+select_permissions:
+  - role: auth-server
+    permission:
+      columns:
+        - created_at
+        - id
+      filter: {}
+      allow_aggregations: true
+update_permissions:
+  - role: auth-server
+    permission:
+      columns:
+        - created_at
+        - id
+      filter: {}
+      check: {}
+delete_permissions:
+  - role: auth-server
+    permission:
+      backend_only: false
+      filter: {}

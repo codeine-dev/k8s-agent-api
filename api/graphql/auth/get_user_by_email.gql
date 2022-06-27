@@ -1,0 +1,10 @@
+query GetUserByEmail($email: String!) {
+  auth_account(where: { email: { _eq: $email } }, limit: 1) {
+    id
+    email
+    password
+    account_has_roles {
+      role_value
+    }
+  }
+}

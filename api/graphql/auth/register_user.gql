@@ -1,0 +1,18 @@
+mutation RegisterUser(
+  $email: String!
+  $password: String!
+  $role: String!
+  $token: String!
+) {
+  insert_auth_account_one(
+    object: {
+      actor: { data: {} }
+      email: $email
+      password: $password
+      account_has_roles: { data: [{role_value: $role}] }
+      access_tokens: { data: { token: $token } }
+    }
+  ) {
+    id
+  }
+}

@@ -1,5 +1,6 @@
 version: 3
-endpoint: http://localhost:8081
+endpoint: https://graphql-engine-k8p-afitzek.cloud.okteto.net
+admin_secret: p6vM/s18zDP2Z5zszd6+wWzrIeU=
 metadata_directory: metadata
 actions:
   kind: synchronous

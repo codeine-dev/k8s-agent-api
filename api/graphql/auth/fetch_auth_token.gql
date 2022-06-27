@@ -1,0 +1,22 @@
+fragment token_info on auth_access_token {
+  id
+  overwrite_actor_id
+  account {
+    id
+    email
+    actor_id
+    created_at
+    account_has_roles {
+      role_value
+    }
+  }
+  access_token_has_roles {
+    role_value
+  }
+}
+
+query FetchAuthToken($token: String!) {
+  auth_access_token(where: { token: { _eq: $token } }) {
+    ...token_info
+  }
+}

@@ -1,0 +1,39 @@
+[package]
+name = "api"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+regex = "1"
+base64 = "0.13.0"
+sha256 = "1"
+rand = "0.8"
+josekit = "0.8.0"
+
+# Logging
+log = "0.4.17"
+env_logger = "0.9.0"
+
+# Argon2
+rust-argon2 = "1.0.0"
+
+# WebServer
+rocket = { version = "0.5.0-rc.2", features = ["json"]}
+
+# Errors
+snafu = "0.7.1"
+
+#Serde
+serde = "1"
+
+# GraphQL server
+juniper = { version = "0.15", features = ["expose-test-schema"] }
+juniper_rocket = "0.8"
+
+# GraphQL client
+graphql_client = { version = "0.10.0", features = ["reqwest"] }
+
+# Http Client
+reqwest = "0.11"

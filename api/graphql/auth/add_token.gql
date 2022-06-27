@@ -1,0 +1,8 @@
+mutation AddToken($account:uuid!,$token:String!) {
+  insert_auth_access_token_one(object:{
+    account_id:$account
+    token:$token
+  }) {
+    id
+  }
+}
